@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { createUser } from '../services/userAPI';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 
 class Login extends React.Component {
   constructor() {
@@ -21,8 +21,9 @@ class Login extends React.Component {
 
   async setUser() {
     const { history } = this.props;
+    const { name } = this.state;
     this.setState({ loading: true });
-    await createUser(this.state);
+    await createUser({ name });
     history.push('search');
   }
 
