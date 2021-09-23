@@ -20,11 +20,12 @@ export default class MusicCard extends Component {
   }
 
   async handleChange() {
-    const { music } = this.props;
+    const { music, fetchFavoriteSongs } = this.props;
     const { checked } = this.state;
     this.setState({ loading: true });
     if (checked) {
       await removeSong(music);
+      if (fetchFavoriteSongs) fetchFavoriteSongs(true);
     } else {
       await addSong(music);
     }
@@ -54,9 +55,10 @@ export default class MusicCard extends Component {
           <code>audio</code>
           .
         </audio>
-        <label htmlFor={ trackName }>
+        <label htmlFor={ trackId }>
           Favorita
           <input
+            id={ trackId }
             data-testid={ `checkbox-music-${trackId}` }
             type="checkbox"
             checked={ checked }
@@ -81,6 +83,11 @@ MusicCard.propTypes = {
   music: PropTypes.shape({
     trackName: PropTypes.string.isRequired,
     previewUrl: PropTypes.string.isRequired,
-    trackId: PropTypes.number.isRequired,
+    trackId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
+  fetchFavoriteSongs: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+};
+
+MusicCard.defaultProps = {
+  fetchFavoriteSongs: false,
 };
