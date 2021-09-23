@@ -104,8 +104,6 @@ class Search extends React.Component {
       <div data-testid="page-search">
         <Header />
         {(loading) ? this.renderSearch() : <Loading />}
-        {/* {loading && result && this.renderResult(artist, result)}
-        {loading && !result && <p>Nenhum álbum foi encontrado</p>} */}
       </div>
     );
   }
